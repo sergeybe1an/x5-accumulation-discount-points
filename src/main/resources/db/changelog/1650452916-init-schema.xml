@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd"
+    objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1650461405754-1" author="sergeybelan (generated)">
+        <createTable tableName="check_">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_check_"/>
+            </column>
+            <column name="created" type="DATETIME"/>
+            <column name="updated" type="DATETIME"/>
+            <column name="card_number" type="VARCHAR(255)"/>
+            <column name="check_sum" type="DECIMAL"/>
+            <column name="client_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1650461405754-2" author="sergeybelan (generated)">
+        <createTable tableName="check_position">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_check_position"/>
+            </column>
+            <column name="created" type="DATETIME"/>
+            <column name="updated" type="DATETIME"/>
+            <column name="position_sum" type="DECIMAL"/>
+            <column name="check_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1650461405754-3" author="sergeybelan (generated)">
+        <createTable tableName="client">
+            <column autoIncrement="true" startWith="3" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_client"/>
+            </column>
+            <column name="created" type="DATETIME"/>
+            <column name="updated" type="DATETIME"/>
+            <column name="card_number" type="VARCHAR(255)"/>
+            <column name="available_points" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1650461405754-4" author="sergeybelan (generated)">
+        <addForeignKeyConstraint baseColumnNames="check_id" baseTableName="check_position"
+            constraintName="FK_CHECK_POSITION_ON_CHECK" referencedColumnNames="id"
+            referencedTableName="check_"/>
+    </changeSet>
+    <changeSet id="1650461405754-5" author="sergeybelan (generated)">
+        <addForeignKeyConstraint baseColumnNames="client_id" baseTableName="check_"
+            constraintName="FK_CHECK__ON_CLIENT" referencedColumnNames="id"
+            referencedTableName="client"/>
+    </changeSet>
+
+
+    <changeSet id="1650460906816-6" author="sergeybelan (generated)">
+        <insert tableName="client">
+            <column name="id" value="1"/>
+            <column name="card_number" value="11111111111111111111"/>
+            <column name="available_points" value="0"/>
+        </insert>
+        <insert tableName="client">
+            <column name="id" value="2"/>
+            <column name="card_number" value="22222222222222222222"/>
+            <column name="available_points" value="0"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

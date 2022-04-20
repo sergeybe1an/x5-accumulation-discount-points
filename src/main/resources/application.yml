@@ -1,0 +1,17 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/discount_points
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 10
+      idle-timeout: 60000
+  jpa:
+    show-sql: false
+  liquibase:
+    change-log: classpath:/db/changelog-master.xml
