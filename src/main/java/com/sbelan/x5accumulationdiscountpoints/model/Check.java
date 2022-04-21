@@ -1,10 +1,9 @@
 package com.sbelan.x5accumulationdiscountpoints.model;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -35,7 +34,7 @@ public class Check extends BaseEntity {
 
     @OneToMany(mappedBy = "check")
     @Exclude
-    private Set<CheckPosition> checkPositions = new HashSet<>();
+    private List<CheckPosition> checkPositions = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)

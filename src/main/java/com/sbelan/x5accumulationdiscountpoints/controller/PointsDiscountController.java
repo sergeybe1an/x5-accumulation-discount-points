@@ -1,6 +1,6 @@
 package com.sbelan.x5accumulationdiscountpoints.controller;
 
-import com.sbelan.x5accumulationdiscountpoints.model.Check;
+import com.sbelan.x5accumulationdiscountpoints.exception.PointsProcessingException;
 import com.sbelan.x5accumulationdiscountpoints.model.api.NewCheckRequest;
 import com.sbelan.x5accumulationdiscountpoints.service.PointsDiscountService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,18 +52,23 @@ public class PointsDiscountController {
     public ResponseEntity<Map<Object, Object>> adjustPointsQuantity(@Valid @RequestBody NewCheckRequest check) {
 
         Map<Object, Object> response = new HashMap<>();
-        Long newPointsQuantity;
         try {
-            newPointsQuantity = pointsDiscountService.adjustPointsQuantity(check);
+            Long newPointsQuantity = pointsDiscountService.adjustPointsQuantity(check);
+            response.put("points_quantity", newPointsQuantity);
             log.info("PointsDiscountController.adjustPointsQuantity for check: {}, new points quantity: {}", check, newPointsQuantity);
+        } catch (PointsProcessingException e) {
+            log.error("PointsDiscountController.adjustPointsQuantity point processing exception: {}", e.getMessage());
+            response.put("errorMessage", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (HttpClientErrorException e) {
             log.error("PointsDiscountController.adjustPointsQuantity check: {}, error: {}", check, e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            response.put("errorMessage", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         } catch (Exception e) {
             log.error("PointsDiscountController.adjustPointsQuantity check: {}, error: {}", check, e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            response.put("errorMessage", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
-
         return ResponseEntity.ok(response);
     }
 

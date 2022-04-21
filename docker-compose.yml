@@ -1,12 +1,27 @@
 version: '3'
 
 services:
-  app:
-    container_name: xfive_app
+  app1:
+    container_name: xfive_app1
     build: ./
     ports:
       - '8081:8081'
-    hostname: xfive_app
+    hostname: xfive_app1
+    environment:
+      - DB_URL=jdbc:postgresql://db:5432/discount_points
+      - PORT=8081
+    depends_on:
+      - db
+
+  app2:
+    container_name: xfive_app2
+    build: ./
+    ports:
+      - '8082:8082'
+    hostname: xfive_app2
+    environment:
+      - DB_URL=jdbc:postgresql://db:5432/discount_points
+      - PORT=8082
     depends_on:
       - db
 
@@ -16,7 +31,18 @@ services:
       - '5432:5432'
     hostname: xfive_db
     environment:
-      POSTGRES_DB: xfive
+      POSTGRES_DB: discount_points
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_HOST_AUTH_METHOD: 'trust'
+
+  nginx:
+    container_name: xfive_nginx_lb
+    build: docker/docker-nginx
+    restart: always
+    ports:
+      - '80:8080'
+    hostname: xfive_nginx
+    links:
+      - app1
+      - app2

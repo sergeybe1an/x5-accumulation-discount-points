@@ -1,0 +1,142 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8081",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Points discount controller",
+      "description": "Points discount controller"
+    }
+  ],
+  "paths": {
+    "/api/v1/discount-points/adjust": {
+      "post": {
+        "tags": [
+          "Points discount controller"
+        ],
+        "summary": "Adjust points quantity",
+        "operationId": "adjustPointsQuantity",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewCheckRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/discount-points/{clientId}": {
+      "get": {
+        "tags": [
+          "Points discount controller"
+        ],
+        "summary": "Get points quantity by clientId",
+        "operationId": "getPointsQuantityByClientId",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "NewCheck": {
+        "required": [
+          "cardNumber",
+          "checkSum"
+        ],
+        "type": "object",
+        "properties": {
+          "cardNumber": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string"
+          },
+          "checkSum": {
+            "type": "number"
+          },
+          "checkPositions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NewCheckPosition"
+            }
+          }
+        }
+      },
+      "NewCheckPosition": {
+        "required": [
+          "positionSum"
+        ],
+        "type": "object",
+        "properties": {
+          "positionSum": {
+            "type": "number"
+          }
+        }
+      },
+      "NewCheckRequest": {
+        "required": [
+          "check",
+          "clientId"
+        ],
+        "type": "object",
+        "properties": {
+          "clientId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "check": {
+            "$ref": "#/components/schemas/NewCheck"
+          }
+        }
+      }
+    }
+  }
+}

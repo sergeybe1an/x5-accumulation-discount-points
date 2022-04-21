@@ -2,8 +2,8 @@ package com.sbelan.x5accumulationdiscountpoints.model.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -18,5 +18,5 @@ public class NewCheck {
     private String cardNumber;
     @NotNull
     private BigDecimal checkSum;
-    private Set<NewCheckPosition> checkPositions = new HashSet<>();
+    private List<NewCheckPosition> checkPositions = new ArrayList<>();
 }

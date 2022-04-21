@@ -1,0 +1,58 @@
+{
+	"info": {
+		"_postman_id": "5ada3824-e414-4d14-88d8-9b94fc9e55c6",
+		"name": "XFive Discount Points Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get points quantity by clientId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/v1/discount-points/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"discount-points",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adjust points quantity",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"clientId\": 1,\n    \"check\": {\n        \"cardNumber\": 1111111111111111111,\n        \"checkSum\": 400,\n        \"checkPositions\": [\n            {\n                \"positionSum\": 200\n            },\n            {\n                \"positionSum\": 200\n            }\n        ]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/discount-points/adjust",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"discount-points",
+						"adjust"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

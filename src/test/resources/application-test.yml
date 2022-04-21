@@ -1,0 +1,14 @@
+server:
+  port: 8888
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/xfivetest
+    username: postgres
+    password: postgres
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: default
+  jpa:
+    defer-datasource-initialization: true
+    show-sql: true
